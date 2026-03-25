@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenya WQMS — DML Dashboard Design Mockups</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --blue-deep: #0B2545;
+    --blue-mid: #134074;
+    --blue-main: #185FA5;
+    --blue-light: #378ADD;
+    --blue-pale: #E6F1FB;
+    --teal-deep: #085041;
+    --teal-mid: #0F6E56;
+    --teal-main: #1D9E75;
+    --teal-pale: #E1F5EE;
+    --amber: #BA7517;
+    --amber-pale: #FAEEDA;
+    --red: #A32D2D;
+    --red-pale: #FCEBEB;
+    --green: #27500A;
+    --green-pale: #EAF3DE;
+    --gray-900: #1a1a2e;
+    --gray-800: #16213e;
+    --gray-700: #0f3460;
+    --gray-text: #4a5568;
+    --gray-light: #f7fafc;
+    --border: #e2e8f0;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f0f4f8;
+    color: #2d3748;
+    min-height: 100vh;
+  }
+
+  /* ─── Cover Page ─── */
+  .cover {
+    background: linear-gradient(135deg, #0B2545 0%, #134074 45%, #1D6FA5 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .cover-accent {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(29,158,117,0.18) 0%, transparent 70%);
+    top: -150px; right: -100px;
+    pointer-events: none;
+  }
+  .cover-accent2 {
+    position: absolute;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(55,138,221,0.15) 0%, transparent 70%);
+    bottom: -80px; left: -50px;
+    pointer-events: none;
+  }
+  .cover-logo {
+    width: 60px; height: 60px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .cover h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px; font-weight: 600;
+    color: #fff; text-align: center; line-height: 1.15;
+    margin-bottom: 16px; position: relative;
+  }
+  .cover h1 span { color: #5DCAA5; }
+  .cover p.tagline {
+    font-size: 16px; color: rgba(255,255,255,0.65);
+    text-align: center; max-width: 560px; line-height: 1.7;
+    position: relative; margin-bottom: 40px;
+  }
+  .cover-meta {
+    display: flex; gap: 32px;
+    padding: 20px 32px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    position: relative;
+  }
+  .cover-meta-item { text-align: center; }
+  .cover-meta-item .label { font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .cover-meta-item .val { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.9); }
+
+  /* ─── Section dividers ─── */
+  .section-divider {
+    background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid));
+    padding: 32px 48px;
+    display: flex; align-items: center; gap: 16px;
+    margin: 48px 0 0;
+    page-break-before: always;
+  }
+  .section-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 600; color: #fff;
+  }
+  .section-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+  /* ─── Mockup wrapper ─── */
+  .mockup-page {
+    background: #f0f4f8;
+    padding: 32px 40px 40px;
+  }
+  .mockup-label {
+    font-size: 11px; font-weight: 500; color: #718096;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .mockup-label::before {
+    content: ''; display: inline-block;
+    width: 3px; height: 14px;
+    background: var(--blue-main); border-radius: 2px;
+  }
+  .screen {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+    margin-bottom: 28px;
+  }
+  .screen-bar {
+    background: #f8fafc;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+
+  /* ─── Dashboard Components ─── */
+  .dash-header {
+    background: var(--blue-deep);
+    padding: 11px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dash-logo { display: flex; align-items: center; gap: 10px; }
+  .dash-logo-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: rgba(93,202,165,0.25);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .dash-logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; color: #fff; }
+  .dash-logo-sub { font-size: 9px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+  .dash-nav { display: flex; gap: 4px; }
+  .nav-item {
+    padding: 5px 11px; border-radius: 6px; font-size: 10px; font-weight: 500;
+    color: rgba(255,255,255,0.55); cursor: pointer;
+  }
+  .nav-item.active { background: rgba(255,255,255,0.12); color: #fff; }
+  .dash-status { display: flex; align-items: center; gap: 8px; }
+  .status-pill {
+    font-size: 9px; padding: 3px 8px; border-radius: 20px;
+    background: rgba(29,158,117,0.2); color: #5DCAA5; font-weight: 500;
+  }
+  .dash-time { font-size: 10px; color: rgba(255,255,255,0.4); }
+
+  /* KPI Strip */
+  .kpi-strip {
+    background: var(--gray-light);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  .kpi-card { background: var(--white); border-radius: 9px; border: 1px solid var(--border); padding: 9px 12px; }
+  .kpi-label { font-size: 9px; color: #718096; font-weight: 400; margin-bottom: 4px; line-height: 1.4; }
+  .kpi-val { font-size: 22px; font-weight: 600; line-height: 1; }
+  .kpi-sub { font-size: 8px; color: #a0aec0; margin-top: 4px; }
+  .kpi-val.blue { color: var(--blue-main); }
+  .kpi-val.teal { color: var(--teal-mid); }
+  .kpi-val.red { color: var(--red); }
+  .kpi-val.amber { color: var(--amber); }
+
+  /* Main grid */
+  .dash-body { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 0; }
+  .dash-left { border-right: 1px solid var(--border); }
+  .dash-right { }
+  .panel-header {
+    padding: 10px 14px 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .panel-title { font-size: 11px; font-weight: 600; color: #2d3748; }
+  .panel-sub { font-size: 9px; color: #a0aec0; margin-top: 2px; }
+  .badge {
+    font-size: 8px; padding: 2px 7px; border-radius: 20px; font-weight: 500;
+  }
+  .badge-green { background: var(--green-pale); color: var(--green); }
+  .badge-red { background: var(--red-pale); color: var(--red); }
+  .badge-amber { background: var(--amber-pale); color: var(--amber); }
+  .badge-blue { background: var(--blue-pale); color: var(--blue-main); }
+
+  /* Map */
+  .map-container { position: relative; padding: 10px 14px 12px; background: #f7fafc; }
+  .map-legend { display: flex; flex-wrap: wrap; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--border); }
+  .leg-item { display: flex; align-items: center; gap: 4px; font-size: 8px; color: #718096; }
+  .leg-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Alerts */
+  .alert-item {
+    padding: 7px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .alert-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .alert-title { font-size: 9px; font-weight: 600; color: #2d3748; line-height: 1.4; }
+  .alert-meta { font-size: 8px; color: #a0aec0; line-height: 1.5; }
+
+  /* Charts area */
+  .chart-pad { padding: 8px 14px 12px; }
+  .chart-wrap { position: relative; }
+
+  /* Bottom panels */
+  .dash-bottom { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
+  .dash-bottom > div:first-child { border-right: 1px solid var(--border); }
+
+  /* ─── Detail Screens ─── */
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+
+  /* ─── Footer ─── */
+  .doc-footer {
+    background: var(--blue-deep);
+    padding: 28px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 48px;
+  }
+  .doc-footer-left { font-size: 12px; color: rgba(255,255,255,0.5); }
+  .doc-footer-left strong { color: rgba(255,255,255,0.85); }
+  .doc-footer-right { font-size: 11px; color: rgba(255,255,255,0.35); text-align: right; }
+
+  @media print {
+    .cover, .section-divider { break-inside: avoid; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     COVER PAGE
+══════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-accent"></div>
+  <div class="cover-accent2"></div>
+  <div class="cover-logo" style="position:relative">
+    <svg width="30" height="30" viewBox="0 0 30 30"><path d="M15 3C15 3 5 13 5 20A10 10 0 0025 20C25 13 15 3 15 3Z" fill="#5DCAA5" opacity="0.9"/><path d="M15 9C15 9 9 16 9 20A6 6 0 0021 20C21 16 15 9 15 9Z" fill="rgba(255,255,255,0.25)"/></svg>
+  </div>
+  <h1>Kenya Water Quality<br>Monitoring System</h1>
+  <p class="tagline" style="position:relative">UI/UX Design Mockups — DML-Powered National Intelligence Platform<br>featuring Geospatial Mapping, AI Forecasting &amp; Real-Time Alerts</p>
+  <div class="cover-meta" style="position:relative">
+    <div class="cover-meta-item"><div class="label">Version</div><div class="val">v1.0.0</div></div>
+    <div class="cover-meta-item"><div class="label">Project</div><div class="val">WQMS DML</div></div>
+    <div class="cover-meta-item"><div class="label">Coverage</div><div class="val">47 Counties</div></div>
+    <div class="cover-meta-item"><div class="label">Active Sensors</div><div class="val">284</div></div>
+    <div class="cover-meta-item"><div class="label">DML Engine</div><div class="val">v2.4.1</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 01 — FULL DASHBOARD
+══════════════════════════════════════════ -->
+<div class="section-divider">
+  <div>
+    <div class="section-num">Screen 01</div>
+    <div class="section-title">National Dashboard — Full Overview</div>
+    <div class="section-sub">Main operational view with KPIs, geospatial map, DML forecasting and live alerts</div>
+  </div>
+</div>
+
+<div class="mockup-page">
+  <div class="mockup-label">Web Dashboard · 1440px breakpoint</div>
+  <div class="screen">
+    <div class="screen-bar">
+      <div class="dot" style="background:#fc625d"></div>
+      <div class="dot" style="background:#fdbc40"></div>
+      <div class="dot" style="background:#35cd4b"></div>
+      <div style="flex:1;margin:0 10px;background:#f0f4f8;border-radius:4px;height:18px;display:flex;align-items:center;padding:0 10px">
+        <span style="font-size:9px;color:#a0aec0">app.wqms.go.ke/dashboard</span>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="dash-header">
+      <div class="dash-logo">
+        <div class="dash-logo-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1C7 1 2 6.5 2 9.5A5 5 0 0012 9.5C12 6.5 7 1 7 1Z" fill="#5DCAA5"/></svg>
+        </div>
+        <div><div class="dash-logo-text">Kenya WQMS</div><div class="dash-logo-sub">Water Quality Monitoring · DML Platform</div></div>
+      </div>
+      <div class="dash-nav">
+        <div class="nav-item active">Dashboard</div>
+        <div class="nav-item">Sensors</div>
+        <div class="nav-item">Forecasts</div>
+        <div class="nav-item">Reports</div>
+        <div class="nav-item">Settings</div>
+      </div>
+      <div class="dash-status">
+        <div class="status-pill">● System Online</div>
+        <div class="dash-time">14:32 EAT · Wed 25 Mar 2026</div>
+      </div>
+    </div>
+
+    <!-- KPI Strip -->
+    <div class="kpi-strip">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Active Sensors</div>
+        <div class="kpi-val blue">284</div>
+        <div class="kpi-sub">↑ +12 since yesterday</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">National WQI Score</div>
+        <div class="kpi-val teal">67.4</div>
+        <div class="kpi-sub">Moderate · Target 75+</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">DML Contamination Predictions (Next 24h)</div>
+        <div class="kpi-val red">3</div>
+        <div class="kpi-sub">Clusters at high risk</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Active Alerts</div>
+        <div class="kpi-val amber">11</div>
+        <div class="kpi-sub">4 critical · 7 moderate</div>
+      </div>
+    </div>
+
+    <!-- Main body -->
+    <div class="dash-body">
+      <!-- LEFT: Map -->
+      <div class="dash-left">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Geospatial Live Map</div>
+            <div class="panel-sub">Color-coded WQI markers · 47 Counties · Hover for details</div>
+          </div>
+          <span class="badge badge-green">● Live</span>
+        </div>
+        <div class="map-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#27500A"></div>Good (80+)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#0F6E56"></div>Moderate (60–79)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#BA7517"></div>Poor (40–59)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#A32D2D"></div>Critical (&lt;40)</div>
+          <div class="leg-item"><div style="width:20px;height:1px;background:#185FA5;border-top:1px dashed #185FA5;margin-top:3px"></div>Rivers</div>
+        </div>
+        <div class="map-container">
+          <svg width="100%" viewBox="0 0 340 320">
+            <defs>
+              <filter id="ms" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/><feComposite in="blur" in2="SourceGraphic" operator="over"/></filter>
+            </defs>
+            <!-- Background grid -->
+            <rect width="340" height="320" fill="#eef2f7" rx="6"/>
+            <line x1="0" y1="80" x2="340" y2="80" stroke="#dde3ec" stroke-width="0.5"/>
+            <line x1="0" y1="160" x2="340" y2="160" stroke="#dde3ec" stroke-width="0.5"/>
+            <line x1="0" y1="240" x2="340" y2="240" stroke="#dde3ec" stroke-width="0.5"/>
+            <line x1="85" y1="0" x2="85" y2="320" stroke="#dde3ec" stroke-width="0.5"/>
+            <line x1="170" y1="0" x2="170" y2="320" stroke="#dde3ec" stroke-width="0.5"/>
+            <line x1="255" y1="0" x2="255" y2="320" stroke="#dde3ec" stroke-width="0.5"/>
+            <!-- Kenya outline -->
+            <path d="M55,12 L175,10 L232,40 L262,80 L262,138 L244,178 L236,222 L206,274 L175,298 L158,288 L136,298 L116,280 L97,258 L78,232 L42,214 L18,176 L10,136 L20,78 L40,40 Z" fill="white" stroke="#c5d0de" stroke-width="1" fill-opacity="0.9"/>
+            <!-- Lake Victoria -->
+            <ellipse cx="56" cy="238" rx="26" ry="22" fill="#dbeeff" stroke="#185FA5" stroke-width="0.7" fill-opacity="0.7"/>
+            <text style="font-size:6px;fill:#185FA5;opacity:.7;font-family:DM Sans,sans-serif" x="34" y="242">L. Victoria</text>
+            <!-- Rivers -->
+            <path d="M145,170 Q178,188 218,200 Q238,205 258,215" fill="none" stroke="#185FA5" stroke-width="1" stroke-opacity=".3" stroke-dasharray="4 3"/>
+            <path d="M158,122 Q196,144 226,156 Q244,162 260,152" fill="none" stroke="#185FA5" stroke-width="1" stroke-opacity=".3" stroke-dasharray="4 3"/>
+            <text style="font-size:6px;fill:#185FA5;opacity:.5;font-family:DM Sans,sans-serif" x="182" y="194" transform="rotate(-8,182,194)">Athi River</text>
+            <text style="font-size:6px;fill:#185FA5;opacity:.5;font-family:DM Sans,sans-serif" x="182" y="144" transform="rotate(-6,182,144)">Tana River</text>
+            <!-- WQI Markers with glow halos -->
+            <!-- Mandera Critical 35 -->
+            <circle cx="248" cy="48" r="12" fill="#A32D2D" fill-opacity="0.15"/>
+            <circle cx="248" cy="48" r="6" fill="#A32D2D"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="248" y="62" text-anchor="middle">Mandera</text>
+            <!-- Turkana Critical 38 -->
+            <circle cx="98" cy="66" r="12" fill="#A32D2D" fill-opacity="0.15"/>
+            <circle cx="98" cy="66" r="6" fill="#A32D2D"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="98" y="80" text-anchor="middle">Turkana</text>
+            <!-- Eldoret Good 83 -->
+            <circle cx="84" cy="138" r="9" fill="#27500A" fill-opacity="0.18"/>
+            <circle cx="84" cy="138" r="5" fill="#27500A"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="84" y="151" text-anchor="middle">Eldoret</text>
+            <!-- Nyeri Moderate 79 -->
+            <circle cx="147" cy="126" r="8" fill="#0F6E56" fill-opacity="0.18"/>
+            <circle cx="147" cy="126" r="4.5" fill="#0F6E56"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="147" y="139" text-anchor="middle">Nyeri</text>
+            <!-- Thika Poor 55 -->
+            <circle cx="160" cy="150" r="11" fill="#BA7517" fill-opacity="0.2"/>
+            <circle cx="160" cy="150" r="5.5" fill="#BA7517"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="160" y="163" text-anchor="middle">Thika</text>
+            <!-- Nakuru Moderate 74 -->
+            <circle cx="108" cy="168" r="9" fill="#0F6E56" fill-opacity="0.18"/>
+            <circle cx="108" cy="168" r="5" fill="#0F6E56"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="108" y="181" text-anchor="middle">Nakuru</text>
+            <!-- Nairobi Moderate 62 -->
+            <circle cx="144" cy="168" r="12" fill="#0F6E56" fill-opacity="0.18"/>
+            <circle cx="144" cy="168" r="7" fill="#0F6E56"/>
+            <text style="font-size:7px;fill:#4a5568;font-weight:600;font-family:DM Sans,sans-serif" x="144" y="183" text-anchor="middle">Nairobi</text>
+            <!-- Garissa Poor 45 -->
+            <circle cx="218" cy="148" r="10" fill="#BA7517" fill-opacity="0.2"/>
+            <circle cx="218" cy="148" r="5.5" fill="#BA7517"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="218" y="161" text-anchor="middle">Garissa</text>
+            <!-- Kisumu Poor 58 -->
+            <circle cx="79" cy="204" r="10" fill="#BA7517" fill-opacity="0.2"/>
+            <circle cx="79" cy="204" r="5" fill="#BA7517"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="79" y="217" text-anchor="middle">Kisumu</text>
+            <!-- Lamu Good 86 -->
+            <circle cx="252" cy="184" r="8" fill="#27500A" fill-opacity="0.18"/>
+            <circle cx="252" cy="184" r="4.5" fill="#27500A"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="252" y="197" text-anchor="middle">Lamu</text>
+            <!-- Mombasa Moderate 71 -->
+            <circle cx="242" cy="218" r="9" fill="#0F6E56" fill-opacity="0.18"/>
+            <circle cx="242" cy="218" r="5" fill="#0F6E56"/>
+            <text style="font-size:7px;fill:#4a5568;font-family:DM Sans,sans-serif" x="242" y="231" text-anchor="middle">Mombasa</text>
+
+            <!-- Tooltip sample -->
+            <g>
+              <rect x="165" y="90" width="118" height="50" rx="6" fill="white" stroke="#c5d0de" stroke-width="0.7"/>
+              <text style="font-size:8px;font-weight:600;fill:#2d3748;font-family:DM Sans,sans-serif" x="174" y="106">Thika — Athi River Cluster</text>
+              <text style="font-size:7px;fill:#BA7517;font-family:DM Sans,sans-serif" x="174" y="118">WQI Score: 55 · Poor</text>
+              <text style="font-size:7px;fill:#718096;font-family:DM Sans,sans-serif" x="174" y="128">pH 9.8 · 18 sensors active</text>
+              <text style="font-size:7px;fill:#A32D2D;font-family:DM Sans,sans-serif" x="174" y="138">⚠ DML: Risk rising next 6h</text>
+              <line x1="160" y1="150" x2="175" y2="138" stroke="#BA7517" stroke-width="0.7" stroke-dasharray="2 2"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- RIGHT: DML + Alerts -->
+      <div class="dash-right">
+        <!-- DML Forecast -->
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">DML Model Forecasting</div>
+            <div class="panel-sub">AI contamination probability · Athi River Cluster · Next 24h</div>
+          </div>
+          <span class="badge badge-red">3 Risks</span>
+        </div>
+        <div class="chart-pad">
+          <div class="chart-wrap" style="height:180px;">
+            <canvas id="dmlChart"></canvas>
+          </div>
+          <div style="margin-top:9px;padding:9px 11px;background:#fff8f8;border:1px solid #ffd5d5;border-radius:7px">
+            <div style="font-size:9px;font-weight:600;color:#A32D2D;margin-bottom:3px">AI Insight · High Confidence</div>
+            <div style="font-size:8px;color:#718096;line-height:1.65">Athi River: <strong style="color:#A32D2D">87% contamination probability at 09:00</strong> — upstream industrial effluent signal detected. Recommend immediate field verification and pre-treatment alert.</div>
+          </div>
+        </div>
+
+        <!-- Alerts Feed -->
+        <div class="panel-header" style="border-top:1px solid var(--border)">
+          <div>
+            <div class="panel-title">Alerts Feed</div>
+            <div class="panel-sub">Categorized · Real-time · Past 7 Days</div>
+          </div>
+          <span style="font-size:8px;color:#718096">11 active</span>
+        </div>
+        <div class="alert-item"><div class="alert-dot" style="background:#A32D2D"></div><div><div class="alert-title">Critical · Turkana Basin</div><div class="alert-meta">Turbidity 340 NTU · Threshold 2× exceeded · 14:10 EAT</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#A32D2D"></div><div><div class="alert-title">Critical · Athi River (Thika)</div><div class="alert-meta">pH 9.8 · Industrial effluent detected · 13:47 EAT</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#A32D2D"></div><div><div class="alert-title">Critical · Mandera</div><div class="alert-meta">Dissolved Oxygen 1.8 mg/L · Below safe minimum · 13:20 EAT</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#BA7517"></div><div><div class="alert-title">Moderate · Kisumu (L. Victoria)</div><div class="alert-meta">Nitrate 52 mg/L · Agricultural runoff · 12:55 EAT</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#BA7517"></div><div><div class="alert-title">Moderate · Garissa (Tana River)</div><div class="alert-meta">E. coli 450 CFU/100ml · DML spike predicted · 12:30 EAT</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#1D9E75"></div><div><div class="alert-title">Info · Nakuru Station KE-047</div><div class="alert-meta">Sensor cluster reconnected · 11:58 EAT</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#1D9E75"></div><div><div class="alert-title">Resolved · Mombasa Port</div><div class="alert-meta">Chlorine levels normalised after treatment · 10:44 EAT</div></div></div>
+      </div>
+    </div>
+
+    <!-- Historical Trends row -->
+    <div class="dash-bottom">
+      <div>
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Historical WQI Trends</div>
+            <div class="panel-sub">Past 7 days · National vs Key Basins</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <span style="font-size:8px;color:#718096;display:flex;align-items:center;gap:3px"><span style="width:12px;height:2px;background:#185FA5;display:inline-block;border-radius:1px"></span>National</span>
+            <span style="font-size:8px;color:#718096;display:flex;align-items:center;gap:3px"><span style="width:12px;height:2px;background:#BA7517;display:inline-block;border-radius:1px"></span>Athi R.</span>
+            <span style="font-size:8px;color:#718096;display:flex;align-items:center;gap:3px"><span style="width:12px;height:1px;background:#E24B4A;display:inline-block;border-top:1px dashed #E24B4A"></span>Turkana</span>
+          </div>
+        </div>
+        <div class="chart-pad">
+          <div class="chart-wrap" style="height:148px"><canvas id="trendChart"></canvas></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Sensor Status by Region</div>
+            <div class="panel-sub">Deployment coverage · 47 Counties</div>
+          </div>
+          <span class="badge badge-blue">284 Active</span>
+        </div>
+        <div class="chart-pad">
+          <div class="chart-wrap" style="height:148px"><canvas id="regionChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer bar -->
+    <div style="background:var(--blue-deep);padding:8px 20px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:8px;color:rgba(255,255,255,.4)">DML Engine v2.4.1 · Random Forest + LSTM Ensemble · Model Accuracy 94.2%</span>
+      <span style="font-size:8px;color:rgba(255,255,255,.4)">Kenya Water Resources Authority · Last sync: 14:32:11 EAT</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 02 — DML FORECAST DETAIL
+══════════════════════════════════════════ -->
+<div class="section-divider">
+  <div>
+    <div class="section-num">Screen 02</div>
+    <div class="section-title">DML Forecasting — Cluster Deep Dive</div>
+    <div class="section-sub">AI model output detail for the Athi River cluster, confidence bands, and parameter breakdown</div>
+  </div>
+</div>
+
+<div class="mockup-page">
+  <div class="mockup-label">DML Forecast Panel · Athi River Cluster</div>
+  <div class="detail-grid">
+    <!-- DML Expanded -->
+    <div class="screen" style="grid-column:1/-1">
+      <div class="screen-bar">
+        <div class="dot" style="background:#fc625d"></div>
+        <div class="dot" style="background:#fdbc40"></div>
+        <div class="dot" style="background:#35cd4b"></div>
+        <div style="flex:1;margin:0 10px;background:#f0f4f8;border-radius:4px;height:18px;display:flex;align-items:center;padding:0 10px">
+          <span style="font-size:9px;color:#a0aec0">app.wqms.go.ke/forecast/athi-river</span>
+        </div>
+      </div>
+      <div class="dash-header">
+        <div class="dash-logo">
+          <div class="dash-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1C7 1 2 6.5 2 9.5A5 5 0 0012 9.5C12 6.5 7 1 7 1Z" fill="#5DCAA5"/></svg></div>
+          <div><div class="dash-logo-text">Kenya WQMS</div><div class="dash-logo-sub">DML Forecast · Athi River Cluster</div></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="badge badge-red" style="font-size:9px;padding:4px 10px">RISK: HIGH</span>
+          <span style="font-size:9px;color:rgba(255,255,255,.5);display:flex;align-items:center">Model Confidence: 94.2%</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:0">
+        <div style="padding:14px 16px;border-right:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#2d3748">Contamination Risk Forecast — Next 24 Hours</div>
+              <div style="font-size:9px;color:#a0aec0;margin-top:2px">Random Forest + LSTM Ensemble · 3-hour resolution</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <span class="badge badge-blue">Athi River</span>
+              <span class="badge badge-amber">Garissa</span>
+              <span class="badge badge-green">Nakuru</span>
+            </div>
+          </div>
+          <div style="position:relative;height:220px"><canvas id="dmlDetail"></canvas></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px">
+            <div style="background:#fff5f5;border:1px solid #ffd5d5;border-radius:8px;padding:9px 11px">
+              <div style="font-size:8px;color:#A32D2D;font-weight:600;margin-bottom:3px">Peak Risk Window</div>
+              <div style="font-size:16px;font-weight:600;color:#A32D2D">06:00–12:00</div>
+              <div style="font-size:8px;color:#718096;margin-top:2px">Athi downstream · EAT</div>
+            </div>
+            <div style="background:#fffbf0;border:1px solid #fde68a;border-radius:8px;padding:9px 11px">
+              <div style="font-size:8px;color:#BA7517;font-weight:600;margin-bottom:3px">Key Trigger Parameter</div>
+              <div style="font-size:16px;font-weight:600;color:#BA7517">pH 9.8</div>
+              <div style="font-size:8px;color:#718096;margin-top:2px">Industrial effluent signal</div>
+            </div>
+            <div style="background:#f0fff4;border:1px solid #c6f6d5;border-radius:8px;padding:9px 11px">
+              <div style="font-size:8px;color:#27500A;font-weight:600;margin-bottom:3px">Recommended Action</div>
+              <div style="font-size:12px;font-weight:600;color:#27500A">Pre-Treatment Alert</div>
+              <div style="font-size:8px;color:#718096;margin-top:2px">Issue by 04:00 EAT</div>
+            </div>
+          </div>
+        </div>
+        <!-- Parameter breakdown -->
+        <div style="padding:14px 16px">
+          <div style="font-size:11px;font-weight:600;color:#2d3748;margin-bottom:10px">Parameter Risk Breakdown</div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:9px;color:#4a5568">Turbidity (NTU)</span>
+                <span style="font-size:9px;font-weight:600;color:#A32D2D">340 NTU</span>
+              </div>
+              <div style="height:5px;background:#f0f4f8;border-radius:3px;overflow:hidden">
+                <div style="width:92%;height:100%;background:#A32D2D;border-radius:3px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:9px;color:#4a5568">pH Level</span>
+                <span style="font-size:9px;font-weight:600;color:#A32D2D">9.8</span>
+              </div>
+              <div style="height:5px;background:#f0f4f8;border-radius:3px;overflow:hidden">
+                <div style="width:88%;height:100%;background:#A32D2D;border-radius:3px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:9px;color:#4a5568">Dissolved Oxygen (mg/L)</span>
+                <span style="font-size:9px;font-weight:600;color:#BA7517">3.2</span>
+              </div>
+              <div style="height:5px;background:#f0f4f8;border-radius:3px;overflow:hidden">
+                <div style="width:60%;height:100%;background:#BA7517;border-radius:3px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:9px;color:#4a5568">Nitrates (mg/L)</span>
+                <span style="font-size:9px;font-weight:600;color:#BA7517">52</span>
+              </div>
+              <div style="height:5px;background:#f0f4f8;border-radius:3px;overflow:hidden">
+                <div style="width:55%;height:100%;background:#BA7517;border-radius:3px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:9px;color:#4a5568">E. coli (CFU/100ml)</span>
+                <span style="font-size:9px;font-weight:600;color:#BA7517">450</span>
+              </div>
+              <div style="height:5px;background:#f0f4f8;border-radius:3px;overflow:hidden">
+                <div style="width:45%;height:100%;background:#BA7517;border-radius:3px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:9px;color:#4a5568">Temperature (°C)</span>
+                <span style="font-size:9px;font-weight:600;color:#0F6E56">28.4</span>
+              </div>
+              <div style="height:5px;background:#f0f4f8;border-radius:3px;overflow:hidden">
+                <div style="width:30%;height:100%;background:#0F6E56;border-radius:3px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span style="font-size:9px;color:#4a5568">Conductivity (μS/cm)</span>
+                <span style="font-size:9px;font-weight:600;color:#0F6E56">412</span>
+              </div>
+              <div style="height:5px;background:#f0f4f8;border-radius:3px;overflow:hidden">
+                <div style="width:25%;height:100%;background:#0F6E56;border-radius:3px"></div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px;padding:10px;background:#f7fafc;border-radius:7px;border:1px solid var(--border)">
+            <div style="font-size:9px;font-weight:600;color:#2d3748;margin-bottom:5px">DML Model Chain</div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="font-size:8px;color:#718096;display:flex;justify-content:space-between"><span>Random Forest Classifier</span><span style="color:#27500A">94.2% acc.</span></div>
+              <div style="font-size:8px;color:#718096;display:flex;justify-content:space-between"><span>LSTM Time-Series Predictor</span><span style="color:#27500A">91.8% acc.</span></div>
+              <div style="font-size:8px;color:#718096;display:flex;justify-content:space-between"><span>Ensemble Voting Layer</span><span style="color:#185FA5">Active</span></div>
+              <div style="font-size:8px;color:#718096;display:flex;justify-content:space-between"><span>Feature count</span><span>47 parameters</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 03 — HISTORICAL & MOBILE
+══════════════════════════════════════════ -->
+<div class="section-divider">
+  <div>
+    <div class="section-num">Screen 03</div>
+    <div class="section-title">Historical Trends & Mobile View</div>
+    <div class="section-sub">Past 7-day WQI breakdown and responsive mobile layout for field officers</div>
+  </div>
+</div>
+
+<div class="mockup-page">
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px">
+    <!-- Historical panel -->
+    <div>
+      <div class="mockup-label">Historical Trends · Desktop</div>
+      <div class="screen">
+        <div class="screen-bar">
+          <div class="dot" style="background:#fc625d"></div><div class="dot" style="background:#fdbc40"></div><div class="dot" style="background:#35cd4b"></div>
+          <div style="flex:1;margin:0 10px;background:#f0f4f8;border-radius:4px;height:18px;display:flex;align-items:center;padding:0 10px"><span style="font-size:9px;color:#a0aec0">app.wqms.go.ke/trends</span></div>
+        </div>
+        <div style="padding:14px 18px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#2d3748">Historical WQI Trends</div>
+              <div style="font-size:9px;color:#a0aec0">Past 7 Days · National Average vs Key River Basins</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button style="font-size:8px;padding:3px 9px;border:1px solid var(--border);border-radius:5px;background:white;color:#4a5568;cursor:pointer">7d</button>
+              <button style="font-size:8px;padding:3px 9px;border:1px solid var(--blue-main);border-radius:5px;background:var(--blue-pale);color:var(--blue-main);cursor:pointer">30d</button>
+              <button style="font-size:8px;padding:3px 9px;border:1px solid var(--border);border-radius:5px;background:white;color:#4a5568;cursor:pointer">90d</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px">
+            <div style="background:var(--blue-pale);border-radius:7px;padding:9px"><div style="font-size:8px;color:var(--blue-main);margin-bottom:3px">National WQI</div><div style="font-size:18px;font-weight:600;color:var(--blue-main)">67.4</div><div style="font-size:8px;color:#718096">↓ -1.8 vs last wk</div></div>
+            <div style="background:var(--red-pale);border-radius:7px;padding:9px"><div style="font-size:8px;color:var(--red);margin-bottom:3px">Athi River</div><div style="font-size:18px;font-weight:600;color:var(--red)">55.2</div><div style="font-size:8px;color:#718096">↓ -4.6 vs last wk</div></div>
+            <div style="background:var(--red-pale);border-radius:7px;padding:9px"><div style="font-size:8px;color:var(--red);margin-bottom:3px">Turkana Basin</div><div style="font-size:18px;font-weight:600;color:var(--red)">37.8</div><div style="font-size:8px;color:#718096">↓ -2.1 vs last wk</div></div>
+            <div style="background:var(--teal-pale);border-radius:7px;padding:9px"><div style="font-size:8px;color:var(--teal-mid);margin-bottom:3px">Coast Region</div><div style="font-size:18px;font-weight:600;color:var(--teal-mid)">71.3</div><div style="font-size:8px;color:#718096">↑ +2.2 vs last wk</div></div>
+          </div>
+          <div style="position:relative;height:220px"><canvas id="histChart"></canvas></div>
+          <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="padding:10px 12px;background:#f7fafc;border-radius:7px;border:1px solid var(--border)">
+              <div style="font-size:9px;font-weight:600;color:#2d3748;margin-bottom:5px">Worst Performing Regions</div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:8px;color:#4a5568">Turkana Basin</span><span style="font-size:8px;background:var(--red-pale);color:var(--red);padding:1px 6px;border-radius:4px">WQI 37.8</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:8px;color:#4a5568">Mandera County</span><span style="font-size:8px;background:var(--red-pale);color:var(--red);padding:1px 6px;border-radius:4px">WQI 35.2</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:8px;color:#4a5568">Athi River (Thika)</span><span style="font-size:8px;background:var(--amber-pale);color:var(--amber);padding:1px 6px;border-radius:4px">WQI 55.2</span></div>
+              </div>
+            </div>
+            <div style="padding:10px 12px;background:#f7fafc;border-radius:7px;border:1px solid var(--border)">
+              <div style="font-size:9px;font-weight:600;color:#2d3748;margin-bottom:5px">Best Performing Regions</div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:8px;color:#4a5568">Lamu County</span><span style="font-size:8px;background:var(--green-pale);color:var(--green);padding:1px 6px;border-radius:4px">WQI 86.1</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:8px;color:#4a5568">Eldoret / N. Rift</span><span style="font-size:8px;background:var(--green-pale);color:var(--green);padding:1px 6px;border-radius:4px">WQI 83.4</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:8px;color:#4a5568">Nyeri / Mt. Kenya</span><span style="font-size:8px;background:var(--teal-pale);color:var(--teal-mid);padding:1px 6px;border-radius:4px">WQI 79.0</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile view -->
+    <div>
+      <div class="mockup-label">Field Officer App · Mobile</div>
+      <div style="max-width:260px;margin:0 auto">
+        <div class="screen" style="border-radius:22px;border:5px solid #1a1a2e">
+          <!-- Status bar -->
+          <div style="background:#0B2545;padding:6px 14px 4px;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:8px;color:rgba(255,255,255,.6)">14:32</span>
+            <span style="font-size:7px;color:rgba(255,255,255,.5)">●●● 4G ▐▐</span>
+          </div>
+          <!-- Mobile header -->
+          <div style="background:#134074;padding:10px 14px;display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:11px;font-weight:600;color:#fff">WQMS Kenya</div>
+            <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="3" r="2" fill="white"/><path d="M1 9C1 7 3 6 5 6S9 7 9 9" stroke="white" stroke-width="1" fill="none"/></svg></div>
+          </div>
+          <!-- Alert banner -->
+          <div style="background:#fff8f8;border-bottom:2px solid #ffd5d5;padding:7px 12px;display:flex;gap:7px;align-items:center">
+            <div style="width:6px;height:6px;border-radius:50%;background:#A32D2D;flex-shrink:0"></div>
+            <div style="font-size:9px;font-weight:600;color:#A32D2D">3 Critical alerts near you</div>
+          </div>
+          <!-- Mini map -->
+          <div style="background:#eef2f7;height:120px;position:relative;overflow:hidden">
+            <svg width="100%" height="120" viewBox="0 0 260 120">
+              <rect width="260" height="120" fill="#dde8f0"/>
+              <path d="M30,6 L130,4 L172,24 L196,52 L196,92 L182,110 L154,118 L130,112 L108,118 L88,106 L72,90 L58,74 L28,64 L10,50 L6,26 Z" fill="white" stroke="#c5d0de" stroke-width="0.8" fill-opacity="0.8"/>
+              <circle cx="102" cy="66" r="8" fill="#0F6E56" fill-opacity="0.2"/><circle cx="102" cy="66" r="4" fill="#0F6E56"/>
+              <circle cx="122" cy="58" r="8" fill="#BA7517" fill-opacity="0.2"/><circle cx="122" cy="58" r="4" fill="#BA7517"/>
+              <circle cx="72" cy="50" r="7" fill="#A32D2D" fill-opacity="0.2"/><circle cx="72" cy="50" r="4" fill="#A32D2D"/>
+              <circle cx="130" cy="68" r="5" fill="#185FA5" fill-opacity="0.4"/>
+              <circle cx="130" cy="68" r="2" fill="#185FA5"/>
+              <text style="font-size:7px;fill:#185FA5;font-family:DM Sans,sans-serif" x="136" y="68">You</text>
+            </svg>
+          </div>
+          <!-- Stats -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border)">
+            <div style="padding:9px 12px;border-right:1px solid var(--border)">
+              <div style="font-size:8px;color:#a0aec0">Local WQI</div>
+              <div style="font-size:18px;font-weight:600;color:#0F6E56">62.1</div>
+              <div style="font-size:7px;color:#a0aec0">Nairobi Basin</div>
+            </div>
+            <div style="padding:9px 12px">
+              <div style="font-size:8px;color:#a0aec0">Nearby Sensors</div>
+              <div style="font-size:18px;font-weight:600;color:var(--blue-main)">12</div>
+              <div style="font-size:7px;color:#a0aec0">2 offline</div>
+            </div>
+          </div>
+          <!-- Mobile alerts -->
+          <div style="padding:8px 12px 4px"><div style="font-size:9px;font-weight:600;color:#2d3748;margin-bottom:5px">Nearby Alerts</div></div>
+          <div style="padding:0 8px 4px">
+            <div style="background:#fff5f5;border-left:2px solid #A32D2D;border-radius:5px;padding:6px 8px;margin-bottom:5px">
+              <div style="font-size:8px;font-weight:600;color:#A32D2D">Athi River · Thika</div>
+              <div style="font-size:7px;color:#718096">pH 9.8 · 1.2km away</div>
+            </div>
+            <div style="background:#fffbf0;border-left:2px solid #BA7517;border-radius:5px;padding:6px 8px;margin-bottom:5px">
+              <div style="font-size:8px;font-weight:600;color:#BA7517">Nairobi River · Industrial</div>
+              <div style="font-size:7px;color:#718096">Turbidity high · 2.8km away</div>
+            </div>
+            <div style="background:#f0fff4;border-left:2px solid #1D9E75;border-radius:5px;padding:6px 8px;margin-bottom:8px">
+              <div style="font-size:8px;font-weight:600;color:#0F6E56">Nairobi CBD Station</div>
+              <div style="font-size:7px;color:#718096">All clear · 0.4km away</div>
+            </div>
+          </div>
+          <div style="background:#134074;padding:7px;display:flex;justify-content:space-around;align-items:center">
+            <span style="font-size:8px;color:rgba(255,255,255,.9)">● Map</span>
+            <span style="font-size:8px;color:rgba(255,255,255,.5)">Alerts</span>
+            <span style="font-size:8px;color:rgba(255,255,255,.5)">Sensors</span>
+            <span style="font-size:8px;color:rgba(255,255,255,.5)">Reports</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     COLOR & DESIGN SYSTEM
+══════════════════════════════════════════ -->
+<div class="section-divider">
+  <div>
+    <div class="section-num">Design System</div>
+    <div class="section-title">Color Palette & Typography</div>
+    <div class="section-sub">Water-inspired UI tokens — accessible, semantic, and consistent across all breakpoints</div>
+  </div>
+</div>
+
+<div class="mockup-page">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <!-- Colors -->
+    <div class="screen">
+      <div style="padding:16px 18px">
+        <div style="font-size:12px;font-weight:600;color:#2d3748;margin-bottom:14px">Color System — WQI Status Palette</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div style="font-size:9px;color:#718096;margin-bottom:5px;font-weight:500">WQI Good (80+)</div>
+            <div style="display:flex;gap:4px">
+              <div style="flex:1;height:36px;background:#EAF3DE;border-radius:5px 0 0 5px"></div>
+              <div style="flex:1;height:36px;background:#639922"></div>
+              <div style="flex:1;height:36px;background:#27500A;border-radius:0 5px 5px 0"></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#718096;margin-bottom:5px;font-weight:500">WQI Moderate (60–79) — Primary Brand</div>
+            <div style="display:flex;gap:4px">
+              <div style="flex:1;height:36px;background:#E1F5EE;border-radius:5px 0 0 5px"></div>
+              <div style="flex:1;height:36px;background:#1D9E75"></div>
+              <div style="flex:1;height:36px;background:#085041;border-radius:0 5px 5px 0"></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#718096;margin-bottom:5px;font-weight:500">WQI Poor (40–59)</div>
+            <div style="display:flex;gap:4px">
+              <div style="flex:1;height:36px;background:#FAEEDA;border-radius:5px 0 0 5px"></div>
+              <div style="flex:1;height:36px;background:#BA7517"></div>
+              <div style="flex:1;height:36px;background:#633806;border-radius:0 5px 5px 0"></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#718096;margin-bottom:5px;font-weight:500">WQI Critical (&lt;40)</div>
+            <div style="display:flex;gap:4px">
+              <div style="flex:1;height:36px;background:#FCEBEB;border-radius:5px 0 0 5px"></div>
+              <div style="flex:1;height:36px;background:#E24B4A"></div>
+              <div style="flex:1;height:36px;background:#501313;border-radius:0 5px 5px 0"></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#718096;margin-bottom:5px;font-weight:500">Navigation & UI Shell</div>
+            <div style="display:flex;gap:4px">
+              <div style="flex:1;height:36px;background:#E6F1FB;border-radius:5px 0 0 5px"></div>
+              <div style="flex:1;height:36px;background:#185FA5"></div>
+              <div style="flex:1;height:36px;background:#0B2545;border-radius:0 5px 5px 0"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Typography & components -->
+    <div class="screen">
+      <div style="padding:16px 18px">
+        <div style="font-size:12px;font-weight:600;color:#2d3748;margin-bottom:14px">Typography & Components</div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:8px;color:#a0aec0;margin-bottom:4px">DISPLAY — Space Grotesk 600</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#0B2545">Water Quality System</div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:8px;color:#a0aec0;margin-bottom:4px">HEADING — DM Sans 500</div>
+          <div style="font-size:15px;font-weight:500;color:#2d3748">National Dashboard Overview</div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:8px;color:#a0aec0;margin-bottom:4px">BODY — DM Sans 400</div>
+          <div style="font-size:11px;color:#4a5568;line-height:1.7">DML model analysis indicates elevated contamination risk in the Athi River cluster during the next 6-hour window. Immediate field verification recommended.</div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:8px;color:#a0aec0;margin-bottom:7px">STATUS BADGES</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="badge badge-green" style="font-size:9px;padding:3px 9px">Good · 80+</span>
+            <span class="badge badge-blue" style="font-size:9px;padding:3px 9px">Moderate · 60–79</span>
+            <span class="badge badge-amber" style="font-size:9px;padding:3px 9px">Poor · 40–59</span>
+            <span class="badge badge-red" style="font-size:9px;padding:3px 9px">Critical · &lt;40</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:8px;color:#a0aec0;margin-bottom:7px">INTERACTIVE ELEMENTS</div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+            <button style="font-size:9px;padding:5px 13px;background:#0B2545;color:#fff;border:none;border-radius:6px;cursor:pointer">Issue Alert</button>
+            <button style="font-size:9px;padding:5px 13px;background:var(--teal-pale);color:var(--teal-mid);border:1px solid var(--teal-main);border-radius:6px;cursor:pointer">View Forecast</button>
+            <button style="font-size:9px;padding:5px 13px;background:white;color:#4a5568;border:1px solid var(--border);border-radius:6px;cursor:pointer">Export Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DOC FOOTER
+══════════════════════════════════════════ -->
+<div class="doc-footer">
+  <div class="doc-footer-left"><strong>Kenya Water Quality Monitoring System — WQMS DML</strong><br>Design Mockups v1.0 · Kenya Water Resources Authority</div>
+  <div class="doc-footer-right">UI Design · March 2026<br>DML Engine v2.4.1 · 47 Counties Coverage</div>
+</div>
+
+<script>
+// DML Chart (main dashboard)
+new Chart(document.getElementById('dmlChart'), {
+  type:'bar',
+  data:{
+    labels:['00:00','03:00','06:00','09:00','12:00','15:00','18:00','21:00'],
+    datasets:[
+      {label:'Athi River',data:[52,58,74,87,81,69,63,55],backgroundColor:['#0F6E56','#0F6E56','#BA7517','#A32D2D','#A32D2D','#BA7517','#0F6E56','#0F6E56'],borderRadius:3,borderSkipped:false,barPercentage:0.45,categoryPercentage:0.7},
+      {label:'Garissa',data:[30,35,40,55,62,58,48,38],backgroundColor:['#1D9E75','#1D9E75','#1D9E75','#BA7517','#BA7517','#BA7517','#1D9E75','#1D9E75'],borderRadius:3,borderSkipped:false,barPercentage:0.45,categoryPercentage:0.7}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{font:{size:8},color:'#a0aec0',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.05)'},border:{display:false}},x:{ticks:{font:{size:8},color:'#a0aec0',autoSkip:false,maxRotation:0},grid:{display:false},border:{display:false}}}}
+});
+
+// Trend Chart (main dashboard)
+new Chart(document.getElementById('trendChart'), {
+  type:'line',
+  data:{
+    labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    datasets:[
+      {label:'National WQI',data:[69,71,68,70,67,66,67],borderColor:'#185FA5',backgroundColor:'transparent',borderWidth:1.5,pointRadius:2.5,pointBackgroundColor:'#185FA5',tension:0.35},
+      {label:'Athi River',data:[60,58,55,52,56,58,55],borderColor:'#BA7517',backgroundColor:'transparent',borderWidth:1.5,pointRadius:2.5,pointBackgroundColor:'#BA7517',tension:0.35},
+      {label:'Turkana',data:[40,38,36,38,35,37,38],borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:1.5,borderDash:[4,3],pointRadius:2,pointBackgroundColor:'#E24B4A',tension:0.35}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:30,max:78,ticks:{font:{size:8},color:'#a0aec0'},grid:{color:'rgba(0,0,0,0.05)'},border:{display:false}},x:{ticks:{font:{size:8},color:'#a0aec0',autoSkip:false},grid:{display:false},border:{display:false}}}}
+});
+
+// Region doughnut
+new Chart(document.getElementById('regionChart'), {
+  type:'doughnut',
+  data:{
+    labels:['Rift Valley','Nairobi Region','Coast','North Eastern','Mt. Kenya','Nyanza','Western'],
+    datasets:[{data:[52,48,38,28,44,36,38],backgroundColor:['#1D9E75','#185FA5','#1D9E75','#A32D2D','#27500A','#BA7517','#378ADD'],borderWidth:2,borderColor:'#fff'}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'right',labels:{font:{size:8},padding:6,boxWidth:8}}}}
+});
+
+// Historical detail chart
+new Chart(document.getElementById('histChart'), {
+  type:'line',
+  data:{
+    labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    datasets:[
+      {label:'National',data:[69,71,68,70,67,66,67],borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.06)',fill:true,borderWidth:2,pointRadius:3,tension:0.4},
+      {label:'Athi River',data:[60,58,55,52,56,58,55],borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.06)',fill:true,borderWidth:2,pointRadius:3,tension:0.4},
+      {label:'Turkana',data:[40,38,36,38,35,37,38],borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.06)',fill:true,borderWidth:2,borderDash:[4,3],pointRadius:3,tension:0.4},
+      {label:'Coast',data:[68,70,72,71,73,74,71],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.06)',fill:true,borderWidth:2,pointRadius:3,tension:0.4}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:8},padding:8,boxWidth:10}}},scales:{y:{min:28,max:80,ticks:{font:{size:8},color:'#a0aec0'},grid:{color:'rgba(0,0,0,0.05)'},border:{display:false}},x:{ticks:{font:{size:8},color:'#a0aec0'},grid:{display:false},border:{display:false}}}}
+});
+
+// DML Detail chart
+new Chart(document.getElementById('dmlDetail'), {
+  type:'bar',
+  data:{
+    labels:['00:00','03:00','06:00','09:00','12:00','15:00','18:00','21:00'],
+    datasets:[
+      {label:'Athi River',data:[52,58,74,87,81,69,63,55],backgroundColor:['#27500A','#27500A','#BA7517','#A32D2D','#A32D2D','#BA7517','#0F6E56','#27500A'],borderRadius:4,borderSkipped:false,barPercentage:0.3,categoryPercentage:0.8},
+      {label:'Garissa',data:[30,35,40,55,62,58,48,38],backgroundColor:'#1D9E75',borderRadius:4,borderSkipped:false,barPercentage:0.3,categoryPercentage:0.8},
+      {label:'Nakuru',data:[20,18,22,25,28,24,20,18],backgroundColor:'#185FA5',borderRadius:4,borderSkipped:false,barPercentage:0.3,categoryPercentage:0.8}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:8},padding:8,boxWidth:8}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+'% risk'}}
+    },
+    scales:{
+      y:{min:0,max:100,ticks:{font:{size:8},color:'#a0aec0',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.04)'},border:{display:false}},
+      x:{ticks:{font:{size:8},color:'#a0aec0',autoSkip:false,maxRotation:0},grid:{display:false},border:{display:false}}
+    }
+  }
+});
+</script>
+</body>
+</html>

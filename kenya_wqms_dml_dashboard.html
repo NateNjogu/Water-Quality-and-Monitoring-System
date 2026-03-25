@@ -1,0 +1,344 @@
+
+<style>
+  .wqm { font-family: var(--font-sans); }
+  .wqm-hdr { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 9px 14px; display: flex; align-items: center; justify-content: space-between; border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
+  .badge { font-size: 10px; padding: 3px 8px; border-radius: var(--border-radius-md); }
+  .kgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 10px 12px; }
+  .kcard { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 9px 11px; }
+  .klab { font-size: 10px; color: var(--color-text-secondary); margin-bottom: 3px; line-height: 1.3; }
+  .kval { font-size: 21px; font-weight: 500; line-height: 1; }
+  .ksub { font-size: 10px; color: var(--color-text-secondary); margin-top: 3px; }
+  .mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 12px 8px; }
+  .panel { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .ph { padding: 9px 12px 0; display: flex; align-items: center; justify-content: space-between; }
+  .ptitle { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+  .psub { font-size: 10px; color: var(--color-text-secondary); }
+  .bgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 12px 12px; }
+  .ai { padding: 6px 12px; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: flex-start; gap: 7px; }
+  .adot { width: 6px; height: 6px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .map-wrap { position: relative; }
+  .mtt { position: absolute; background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 6px 9px; font-size: 10px; color: var(--color-text-primary); pointer-events: none; display: none; z-index: 10; white-space: nowrap; }
+  .leg { display: flex; gap: 9px; padding: 5px 12px 8px; flex-wrap: wrap; }
+  .ldot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink:0; }
+  .cleg { display: flex; gap: 12px; padding: 5px 12px 8px; }
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes pulse2 { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .sp { animation: pulse2 2.2s ease-in-out infinite; }
+  }
+</style>
+
+<div class="wqm" style="border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden;">
+  <!-- Header -->
+  <div class="wqm-hdr">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;background:var(--color-background-info);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1.5C7 1.5 2.5 6.2 2.5 9.2A4.5 4.5 0 0011.5 9.2C11.5 6.2 7 1.5 7 1.5Z" fill="#185FA5" fill-opacity=".85"/></svg>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">Kenya Water Quality Monitoring System</div>
+        <div style="font-size:10px;color:var(--color-text-secondary)">DML-Powered Intelligence · National Dashboard</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:7px">
+      <span class="badge" style="background:var(--color-background-success);color:var(--color-text-success)">System Online</span>
+      <span style="font-size:10px;color:var(--color-text-secondary)">14:32 EAT · Live</span>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div style="background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary)">
+    <div class="kgrid">
+      <div class="kcard">
+        <div class="klab">Total Active Sensors</div>
+        <div class="kval" style="color:var(--color-text-info)">284</div>
+        <div class="ksub">+12 since yesterday</div>
+      </div>
+      <div class="kcard">
+        <div class="klab">National WQI Score</div>
+        <div class="kval" style="color:#0F6E56">67.4</div>
+        <div class="ksub">Moderate · Target 75+</div>
+      </div>
+      <div class="kcard">
+        <div class="klab">DML Contamination Predictions</div>
+        <div class="kval" style="color:var(--color-text-danger)">3</div>
+        <div class="ksub">Clusters at risk · Next 24hrs</div>
+      </div>
+      <div class="kcard">
+        <div class="klab">Active Alerts</div>
+        <div class="kval" style="color:#BA7517">11</div>
+        <div class="ksub">4 critical · 7 moderate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map + DML Forecast -->
+  <div class="mgrid" style="padding-top:10px">
+    <!-- Map -->
+    <div class="panel">
+      <div class="ph">
+        <div><div class="ptitle">Geospatial Live Map</div><div class="psub">Color-coded WQI · 47 Counties</div></div>
+        <span class="badge" style="background:var(--color-background-success);color:var(--color-text-success)">Live</span>
+      </div>
+      <div class="leg">
+        <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span class="ldot" style="background:#27500A"></span>Good 80+</span>
+        <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span class="ldot" style="background:#0F6E56"></span>Moderate 60–79</span>
+        <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span class="ldot" style="background:#BA7517"></span>Poor 40–59</span>
+        <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span class="ldot" style="background:#A32D2D"></span>Critical &lt;40</span>
+      </div>
+      <div class="map-wrap" style="padding:0 12px 12px">
+        <div class="mtt" id="mtt"></div>
+        <svg width="100%" viewBox="0 0 290 300" style="border-radius:6px;background:var(--color-background-secondary)">
+          <style>
+            .msvg text { font-family: var(--font-sans); }
+            .sm:hover circle:last-of-type { filter:none; opacity:.85; cursor:pointer; }
+          </style>
+          <g class="msvg">
+            <!-- Kenya outline -->
+            <path d="M55,10 L170,8 L230,38 L258,75 L258,135 L240,172 L232,218 L202,268 L172,295 L155,285 L134,295 L115,278 L95,255 L75,228 L38,210 L16,172 L8,134 L18,75 L38,38 Z" fill="var(--color-background-primary)" stroke="var(--color-border-secondary)" stroke-width="0.7" fill-opacity="0.8"/>
+            <!-- Lake Victoria -->
+            <ellipse cx="52" cy="230" rx="25" ry="20" fill="var(--color-background-info)" fill-opacity="0.25" stroke="#185FA5" stroke-width="0.5" stroke-opacity="0.5"/>
+            <text style="font-size:6px;fill:var(--color-text-info);opacity:.7" x="28" y="234">L. Victoria</text>
+            <!-- Rivers -->
+            <path d="M140,162 Q172,180 210,192 Q228,197 250,206" fill="none" stroke="#185FA5" stroke-width="0.7" stroke-opacity="0.35" stroke-dasharray="3 2"/>
+            <path d="M152,118 Q192,140 220,152 Q238,158 254,148" fill="none" stroke="#185FA5" stroke-width="0.7" stroke-opacity="0.35" stroke-dasharray="3 2"/>
+            <text style="font-size:6px;fill:#185FA5;opacity:.55" x="184" y="189" transform="rotate(-10,184,189)">Athi River</text>
+            <text style="font-size:6px;fill:#185FA5;opacity:.55" x="184" y="140" transform="rotate(-8,184,140)">Tana River</text>
+
+            <!-- Markers: Mandera Critical 35 -->
+            <g class="sm" data-name="Mandera" data-wqi="35" data-dept="North Eastern" data-status="Critical" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="240" cy="45" r="10" fill="#A32D2D" fill-opacity="0.18" class="sp"/>
+              <circle cx="240" cy="45" r="5" fill="#A32D2D"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="240" y="58" text-anchor="middle">Mandera</text>
+            </g>
+            <!-- Turkana Critical 38 -->
+            <g class="sm" data-name="Turkana" data-wqi="38" data-dept="North Kenya" data-status="Critical" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="95" cy="62" r="10" fill="#A32D2D" fill-opacity="0.18" class="sp"/>
+              <circle cx="95" cy="62" r="5" fill="#A32D2D"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="95" y="75" text-anchor="middle">Turkana</text>
+            </g>
+            <!-- Eldoret Good 83 -->
+            <g class="sm" data-name="Eldoret" data-wqi="83" data-dept="North Rift" data-status="Good" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="82" cy="132" r="8" fill="#27500A" fill-opacity="0.18"/>
+              <circle cx="82" cy="132" r="4.5" fill="#27500A"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="82" y="144" text-anchor="middle">Eldoret</text>
+            </g>
+            <!-- Nyeri Moderate 79 -->
+            <g class="sm" data-name="Nyeri" data-wqi="79" data-dept="Mt. Kenya Region" data-status="Moderate" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="144" cy="122" r="7" fill="#0F6E56" fill-opacity="0.18"/>
+              <circle cx="144" cy="122" r="4" fill="#0F6E56"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="144" y="134" text-anchor="middle">Nyeri</text>
+            </g>
+            <!-- Thika Poor 55 (Athi River) -->
+            <g class="sm" data-name="Thika" data-wqi="55" data-dept="Athi River Cluster" data-status="Poor" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="156" cy="144" r="9" fill="#BA7517" fill-opacity="0.18" class="sp"/>
+              <circle cx="156" cy="144" r="4.5" fill="#BA7517"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="156" y="156" text-anchor="middle">Thika</text>
+            </g>
+            <!-- Nakuru Moderate 74 -->
+            <g class="sm" data-name="Nakuru" data-wqi="74" data-dept="Rift Valley" data-status="Moderate" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="106" cy="162" r="8" fill="#0F6E56" fill-opacity="0.18"/>
+              <circle cx="106" cy="162" r="4.5" fill="#0F6E56"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="106" y="174" text-anchor="middle">Nakuru</text>
+            </g>
+            <!-- Nairobi Moderate 62 -->
+            <g class="sm" data-name="Nairobi" data-wqi="62" data-dept="Athi River Basin" data-status="Moderate" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="141" cy="162" r="10" fill="#0F6E56" fill-opacity="0.18" class="sp"/>
+              <circle cx="141" cy="162" r="5.5" fill="#0F6E56"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="141" y="175" text-anchor="middle">Nairobi</text>
+            </g>
+            <!-- Garissa Poor 45 -->
+            <g class="sm" data-name="Garissa" data-wqi="45" data-dept="Tana River Region" data-status="Poor" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="214" cy="142" r="9" fill="#BA7517" fill-opacity="0.2" class="sp"/>
+              <circle cx="214" cy="142" r="4.5" fill="#BA7517"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="214" y="154" text-anchor="middle">Garissa</text>
+            </g>
+            <!-- Kisumu Poor 58 -->
+            <g class="sm" data-name="Kisumu" data-wqi="58" data-dept="Nyanza / Lake Victoria" data-status="Poor" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="76" cy="198" r="9" fill="#BA7517" fill-opacity="0.18" class="sp"/>
+              <circle cx="76" cy="198" r="4.5" fill="#BA7517"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="76" y="210" text-anchor="middle">Kisumu</text>
+            </g>
+            <!-- Lamu Good 86 -->
+            <g class="sm" data-name="Lamu" data-wqi="86" data-dept="Coastal North" data-status="Good" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="248" cy="178" r="7" fill="#27500A" fill-opacity="0.18"/>
+              <circle cx="248" cy="178" r="4" fill="#27500A"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="248" y="190" text-anchor="middle">Lamu</text>
+            </g>
+            <!-- Mombasa Moderate 71 -->
+            <g class="sm" data-name="Mombasa" data-wqi="71" data-dept="Coast Region" data-status="Moderate" onmouseenter="showM(event,this)" onmouseleave="hideM()">
+              <circle cx="238" cy="212" r="8" fill="#0F6E56" fill-opacity="0.18"/>
+              <circle cx="238" cy="212" r="4.5" fill="#0F6E56"/>
+              <text style="font-size:6px;fill:var(--color-text-secondary)" x="238" y="224" text-anchor="middle">Mombasa</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- DML Forecast -->
+    <div class="panel">
+      <div class="ph">
+        <div><div class="ptitle">DML Model Forecasting</div><div class="psub">Athi River Cluster · Next 24 Hours</div></div>
+        <span class="badge" style="background:var(--color-background-danger);color:var(--color-text-danger)">3 Risks</span>
+      </div>
+      <div class="cleg" style="padding:4px 12px 2px">
+        <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#185FA5;display:inline-block"></span>Athi River</span>
+        <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#BA7517;display:inline-block"></span>Garissa (Tana)</span>
+      </div>
+      <div style="padding:0 12px 8px;position:relative;height:195px">
+        <canvas id="dmlChart"></canvas>
+      </div>
+      <div style="padding:8px 12px 10px;border-top:0.5px solid var(--color-border-tertiary)">
+        <div style="font-size:10px;font-weight:500;color:var(--color-text-primary);margin-bottom:5px">AI Model Insights</div>
+        <div style="font-size:9px;color:var(--color-text-secondary);line-height:1.65">
+          Athi River downstream: <span style="color:var(--color-text-danger)">87% contamination probability at 09:00</span> — upstream industrial effluent signal detected.<br>
+          Garissa: Turbidity spike forecast at 06:00 EAT. Recommend field verification.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historical + Alerts -->
+  <div class="bgrid">
+    <!-- Historical Trends -->
+    <div class="panel">
+      <div class="ph" style="padding-bottom:4px">
+        <div><div class="ptitle">Historical WQI Trends</div><div class="psub">Past 7 days · Key basins</div></div>
+        <div style="display:flex;gap:9px;align-items:center">
+          <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:9px;height:2px;background:#185FA5;display:inline-block;border-radius:1px"></span>National</span>
+          <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:9px;height:2px;background:#BA7517;display:inline-block;border-radius:1px"></span>Athi River</span>
+          <span style="font-size:9px;color:var(--color-text-secondary);display:flex;align-items:center;gap:3px"><span style="width:9px;height:2px;background:#E24B4A;display:inline-block;border-radius:1px;border-top: 1px dashed #E24B4A;height:0"></span>Turkana</span>
+        </div>
+      </div>
+      <div style="padding:6px 12px 12px;position:relative;height:175px">
+        <canvas id="trendChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Alerts Feed -->
+    <div class="panel">
+      <div class="ph" style="padding-bottom:7px">
+        <div><div class="ptitle">Alerts Feed</div><div class="psub">Categorized · Real-time</div></div>
+        <span style="font-size:9px;color:var(--color-text-secondary)">11 active</span>
+      </div>
+      <div style="border-top:0.5px solid var(--color-border-tertiary)">
+        <div class="ai">
+          <span class="adot" style="background:#A32D2D"></span>
+          <div><div style="font-size:10px;font-weight:500;color:var(--color-text-primary)">Critical · Turkana Basin</div><div style="font-size:9px;color:var(--color-text-secondary)">Turbidity 340 NTU · Threshold 2× exceeded · 14:10</div></div>
+        </div>
+        <div class="ai">
+          <span class="adot" style="background:#A32D2D"></span>
+          <div><div style="font-size:10px;font-weight:500;color:var(--color-text-primary)">Critical · Athi River (Thika)</div><div style="font-size:9px;color:var(--color-text-secondary)">pH 9.8 · Industrial effluent detected · 13:47</div></div>
+        </div>
+        <div class="ai">
+          <span class="adot" style="background:#A32D2D"></span>
+          <div><div style="font-size:10px;font-weight:500;color:var(--color-text-primary)">Critical · Mandera</div><div style="font-size:9px;color:var(--color-text-secondary)">DO 1.8 mg/L · Below safe minimum · 13:20</div></div>
+        </div>
+        <div class="ai">
+          <span class="adot" style="background:#BA7517"></span>
+          <div><div style="font-size:10px;font-weight:500;color:var(--color-text-primary)">Moderate · Kisumu (L. Victoria)</div><div style="font-size:9px;color:var(--color-text-secondary)">Nitrate 52 mg/L · Agricultural runoff · 12:55</div></div>
+        </div>
+        <div class="ai">
+          <span class="adot" style="background:#BA7517"></span>
+          <div><div style="font-size:10px;font-weight:500;color:var(--color-text-primary)">Moderate · Garissa (Tana River)</div><div style="font-size:9px;color:var(--color-text-secondary)">E. coli 450 CFU/100ml · DML spike predicted · 12:30</div></div>
+        </div>
+        <div class="ai">
+          <span class="adot" style="background:#1D9E75"></span>
+          <div><div style="font-size:10px;font-weight:500;color:var(--color-text-primary)">Info · Nakuru Station</div><div style="font-size:9px;color:var(--color-text-secondary)">Sensor cluster KE-047 reconnected · 11:58</div></div>
+        </div>
+        <div class="ai">
+          <span class="adot" style="background:#1D9E75"></span>
+          <div><div style="font-size:10px;font-weight:500;color:var(--color-text-primary)">Resolved · Mombasa Port</div><div style="font-size:9px;color:var(--color-text-secondary)">Chlorine levels normalised after treatment · 10:44</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="border-top:0.5px solid var(--color-border-tertiary);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:var(--color-background-secondary)">
+    <span style="font-size:9px;color:var(--color-text-secondary)">DML Engine v2.4.1 · Random Forest + LSTM Ensemble · Accuracy 94.2%</span>
+    <span style="font-size:9px;color:var(--color-text-secondary)">Kenya Water Resources Authority · WQMS Platform</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function showM(e, el) {
+  var tt = document.getElementById('mtt');
+  var wqi = parseInt(el.dataset.wqi);
+  var col = wqi >= 80 ? '#27500A' : wqi >= 60 ? '#0F6E56' : wqi >= 40 ? '#BA7517' : '#A32D2D';
+  tt.innerHTML = '<strong>' + el.dataset.name + '</strong> &nbsp;<span style="color:' + col + ';font-weight:500">WQI ' + wqi + '</span><br><span style="color:var(--color-text-secondary)">' + el.dataset.dept + ' · ' + el.dataset.status + '</span>';
+  tt.style.display = 'block';
+  var wrap = e.currentTarget.closest('.map-wrap');
+  var wr = wrap.getBoundingClientRect();
+  var x = e.clientX - wr.left + 10;
+  var y = e.clientY - wr.top - 12;
+  if (x > wr.width - 140) x = x - 150;
+  tt.style.left = x + 'px'; tt.style.top = y + 'px';
+}
+function hideM() { document.getElementById('mtt').style.display = 'none'; }
+
+var dk = matchMedia('(prefers-color-scheme: dark)').matches;
+var tc = dk ? '#9c9a92' : '#73726c';
+var gc = dk ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.06)';
+
+new Chart(document.getElementById('dmlChart'), {
+  type: 'bar',
+  data: {
+    labels: ['00:00','03:00','06:00','09:00','12:00','15:00','18:00','21:00'],
+    datasets: [{
+      label: 'Athi River',
+      data: [52, 58, 74, 87, 81, 69, 63, 55],
+      backgroundColor: ['#0F6E56','#0F6E56','#BA7517','#A32D2D','#A32D2D','#BA7517','#0F6E56','#0F6E56'],
+      borderRadius: 3, borderSkipped: false, barPercentage: 0.45, categoryPercentage: 0.7
+    },{
+      label: 'Garissa',
+      data: [30, 35, 40, 55, 62, 58, 48, 38],
+      backgroundColor: ['#1D9E75','#1D9E75','#1D9E75','#BA7517','#BA7517','#BA7517','#1D9E75','#1D9E75'],
+      borderRadius: 3, borderSkipped: false, barPercentage: 0.45, categoryPercentage: 0.7
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: function(c) { return c.dataset.label + ': ' + c.raw + '% risk'; } } }
+    },
+    scales: {
+      y: { min: 0, max: 100, ticks: { font: { size: 9 }, color: tc, callback: function(v) { return v + '%'; } }, grid: { color: gc }, border: { display: false } },
+      x: { ticks: { font: { size: 9 }, color: tc, autoSkip: false, maxRotation: 0 }, grid: { display: false }, border: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('trendChart'), {
+  type: 'line',
+  data: {
+    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    datasets: [{
+      label: 'National WQI',
+      data: [69, 71, 68, 70, 67, 66, 67],
+      borderColor: '#185FA5', backgroundColor: 'transparent',
+      borderWidth: 1.5, pointRadius: 2.5, pointBackgroundColor: '#185FA5', tension: 0.35
+    },{
+      label: 'Athi River',
+      data: [60, 58, 55, 52, 56, 58, 55],
+      borderColor: '#BA7517', backgroundColor: 'transparent',
+      borderWidth: 1.5, pointRadius: 2.5, pointBackgroundColor: '#BA7517', tension: 0.35
+    },{
+      label: 'Turkana',
+      data: [40, 38, 36, 38, 35, 37, 38],
+      borderColor: '#E24B4A', backgroundColor: 'transparent',
+      borderWidth: 1.5, borderDash: [4,3], pointRadius: 2, pointBackgroundColor: '#E24B4A', tension: 0.35
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { min: 30, max: 78, ticks: { font: { size: 9 }, color: tc }, grid: { color: gc }, border: { display: false } },
+      x: { ticks: { font: { size: 9 }, color: tc, autoSkip: false }, grid: { display: false }, border: { display: false } }
+    }
+  }
+});
+</script>
